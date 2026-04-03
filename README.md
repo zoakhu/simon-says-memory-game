@@ -3,15 +3,13 @@
 # reaction-time-experiment
 
 ## Project Description
-This project will be a simple Python program that measures a user's reaction time. Reaction time is important in cognitive science because it shows how quickly someone responds to a stimulus. The program will display a signal and the user will press a key as quickly as possible. The program will record the reaction time for several trials. At the end, the program will display the user's average reaction time.
+This project an interactive Simon Says memeory game that tests working memory and sequential processing abilities. The game displays a sequence of colored buttons that light up in randome pattern, and the player must repeat the sequence by clicking the buttons in the correct order. Each round, the sequence get longer by one step, which make the cognitive challege more difficult. The game tracks performance metrics including the longest sequence acheived, accuracy rate, and recation time, saving all the data to a CSV file.
+
 
 ## Planned Functions
 
-### run_trial()
-This function will run one reaction time trial. It will display a signal and measure how long it takes for the user to respond.
+### generate_sequence()
 
-### run_experiment()
-This function will run several trials using a loop. It will store each reaction time in a list.
+### play_sequence()
 
-### calculate_average()
-This function will calculate the average reaction time from the list of trials and print the result.
+### check_player_input()
