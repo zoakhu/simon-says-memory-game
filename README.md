@@ -9,6 +9,7 @@ This project an interactive Simon Says memeory game that tests working memory an
 ## Planned Functions
 
 ### generate_sequence()
+this function will generate a random sequence of colors for each round. It takes the current level as input and returns a list of color names that represents the pattern the player must memorize and repeat
 
 ### play_sequence()
 
