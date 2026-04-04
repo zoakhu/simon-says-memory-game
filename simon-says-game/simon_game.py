@@ -27,4 +27,12 @@ def check_player_input(sequence, user_input):
     else:
         return False 
 
+def save_data(data):
+    with open("data/results.csv", "w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(["round", "correct", "reaction_time"])
+        writer.writerows(data)
+
+
+
 
