@@ -1,4 +1,3 @@
-# BCOG-200-Final-Project
 
 # Simon Says Memory Game
 
