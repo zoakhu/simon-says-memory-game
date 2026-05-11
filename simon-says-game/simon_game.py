@@ -255,5 +255,5 @@ def main() -> None:
     run_game()
 
 
- if __name__ == "__main__":
+if __name__ == "__main__":
     main()
