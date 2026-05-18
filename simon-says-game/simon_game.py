@@ -324,7 +324,7 @@ def run_game() -> None:
             canvas.configure(width=canvas_w, height=canvas_h)
  
             # Draw each pad as a filled rectangle — all start dim
-            # to prevent any flicker between rounds
+            # to prevent any flicker between rounds, from peer reviewer2
             for i, color in enumerate(active_colors):
                 row = i // cols
                 col = i % cols
@@ -409,7 +409,7 @@ def run_game() -> None:
                 accepting_input = False
                 reaction_time = round(time.time() - start_time, 2)
                 results.append([level, 1, reaction_time])
-                status_label.configure(text="Correct! Get ready...")
+                status_label.configure(text = "Correct! Get ready...")
                 window.after(1000, next_round)
  
         def play_sequence_gui(seq: list, index: int = 0) -> None:
@@ -491,7 +491,7 @@ def run_game() -> None:
             display_results_summary(player_name, results)
             save_data(player_name, results)
  
-            # Change Quit to Close so player knows to dismiss manually, reviewer3
+            # Change Quit to Close so player knows to dismiss manually, from peer reviewer3
             quit_btn.configure(text="Close")
  
         def end_game() -> None:
