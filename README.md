@@ -42,7 +42,4 @@ round,correct,reaction_time
 python simon_game.py
 ```
  
-## How to Run Tests
-```bash
-pytest tests/
-```
+
