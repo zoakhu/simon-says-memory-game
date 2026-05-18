@@ -40,17 +40,8 @@ PAD_SIZE = 100
  
 def get_active_colors(level: int) -> list:
     """
-    Return the list of colors available at the given level.
-    Starts with the first 4 colors. A new color is added each time
-    the player reaches a threshold in COLOR_UNLOCK_LEVELS.
-    Parameters
-    ----------
-    level : int
-        The current game level.
-    Returns
-    -------
-    list
-        Colors available for sequence generation at this level.
+    Returns the colors available at the current level.
+    New colors are unlocked as the player progresses.
     """
     active = ALL_COLORS[:4].copy()
  
@@ -65,16 +56,7 @@ def get_active_colors(level: int) -> list:
 def generate_sequence(level: int, active_colors: list) -> list:
     """
     Generate a random color sequence for the current level.
-    Parameters
-    ----------
-    level : int
-        Determines the length of the sequence.
-    active_colors : list
-        The pool of colors to draw from.
-    Returns
-    -------
-    list
-        A list of color name strings of length `level`.
+    The sequence length matches the current level.
     """
     # List comprehension to build the sequence
     return [random.choice(active_colors) for _ in range(level)]
@@ -82,30 +64,16 @@ def generate_sequence(level: int, active_colors: list) -> list:
  
 def check_player_input(sequence: list, user_input: list) -> bool:
     """
-    Check whether the player's clicks match the correct sequence.
-    Parameters
-    ----------
-    sequence : list
-        The correct color sequence.
-    user_input : list
-        The colors the player clicked in order.
-    Returns
-    -------
-    bool
-        True if the sequences match exactly, False otherwise.
+    Check if the player's clicks match the correct sequence.
+    Returns True if they match and False if they do not.
     """
     return sequence == user_input
  
  
 def display_results_summary(player_name: str, results: list) -> None:
     """
-    Print a performance summary to the terminal after the game ends.
-    Parameters
-    ----------
-    player_name : str
-        The name entered by the player at the start.
-    results : list
-        A list of [round, correct, reaction_time] rows.
+    Print a summary of the player's performance after the game ends.
+    Shows the highest level reached and average reaction time.
     """
     if not results:
         print("No rounds played.")
@@ -128,9 +96,9 @@ def display_results_summary(player_name: str, results: list) -> None:
  
 def save_data(player_name: str, results: list) -> None:
     """
-    Save round-by-round results to data/results.csv.
-    Appends to the file if it already exists so multiple players
-    accumulate in one place. Includes player name in every row.
+    Save the player's game results to data/results.csv.
+    Creates the data folder if it does not already exist.
+    
     Parameters
     ----------
     player_name : str
@@ -161,10 +129,9 @@ def save_data(player_name: str, results: list) -> None:
  
 def run_game() -> None:
     """
-    Build and run the tkinter Simon Says GUI.
-    Uses a canvas to draw colored pads so colors render correctly
-    on Mac. Flashes each pad in sequence then waits for the player
-    to click them in order. Uses tkinter from Ch. 11 of course notes.
+    Build and run the Simon Says tkinter game.
+    The player watches a sequence of flashing colors and
+    tries to repeat the pattern correctly. Uses tkinter from Ch. 11 of course notes.
     """
     # ── Game state ────────────────────────────────────────────────
     level = 1
@@ -260,7 +227,6 @@ def run_game() -> None:
  
     # ── Game UI (built after name is submitted) ───────────────────
     def build_game_ui() -> None:
-        """Build all game widgets after the player submits their name."""
         nonlocal sequence, accepting_input, start_time
  
         # Greeting with the player's name
@@ -302,14 +268,10 @@ def run_game() -> None:
  
         def build_pads(active_colors: list) -> None:
             """
-            Draw one colored rectangle per active color onto the canvas.
-            Arranges pads in rows of 4. Clears old pads first so the
-            layout always matches the current color pool.
-            Parameters
-            ----------
-            active_colors : list
-                Colors to draw pads for at this level.
+            Draw the color pads on the canvas. 
+            Clears old pads and updates the layout for new colors.
             """
+         
             canvas.delete("all")
             pad_ids.clear()
  
@@ -323,7 +285,7 @@ def run_game() -> None:
             canvas_h = num_rows * PAD_SIZE + (num_rows + 1) * pad_gap
             canvas.configure(width=canvas_w, height=canvas_h)
  
-            # Draw each pad as a filled rectangle — all start dim
+            # Draw each pad as a filled rectangle, all pads start dim
             # to prevent any flicker between rounds, from peer reviewer2
             for i, color in enumerate(active_colors):
                 row = i // cols
@@ -352,7 +314,7 @@ def run_game() -> None:
             Briefly light up a pad to its bright color then dim it.
 
             """
-            # Set to bright color and force redraw
+            # Change the pad to its bright color and update the screen
             canvas.itemconfig(pad_ids[color], fill=color)
             window.update()
             window.after(
@@ -414,9 +376,8 @@ def run_game() -> None:
  
         def play_sequence_gui(seq: list, index: int = 0) -> None:
             """
-            Flash each pad in the sequence one at a time using .after().
-            Schedules the next flash recursively until done, then enables
-            player input.
+            Flash the sequence one color at a time, 
+            then allow the player to start clicking.
             """
             nonlocal accepting_input, start_time
  
