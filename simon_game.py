@@ -1,10 +1,8 @@
 """
 Simon Says Memory Game
 A tkinter-based working memory experiment. Colored canvas pads flash
-in sequence and the player clicks them to repeat the pattern. The
-color pool expands at level thresholds, making the game progressively
-harder. Performance data is saved to data/results.csv after each
-session.
+in sequence and the player has to click them to repeat the pattern. 
+Performance data is saved to data/results.csv after each session.
 """
  
 import csv
